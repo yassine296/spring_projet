@@ -1,12 +1,13 @@
 package tn.esprit.premierepr.domain;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
+import java.util.List;
 
 @Entity
 @Table(name = "Client")
@@ -15,19 +16,30 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Client {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idClient;
-    @Column(nullable = false, unique = true, length = 20)
+
+    @Column(nullable = false, length = 50)
     private String nom;
-    @Column(nullable = false, unique = true, length = 20)
+
+    @Column(nullable = false, length = 50)
     private String prenom;
-    @Column(nullable = false, unique = true, length = 20)
-    private String adresse;
-    @Column(nullable = false, unique = true, length = 20)
+
+    @Column(nullable = false, unique = true, length = 100)
+    private String email;
+
+    @Column(nullable = false, length = 20)
     private String telephone;
-    @Column(nullable = false, unique = true, length = 20)
-    private long numPermis;
-    @Column(nullable = false, unique = true, length = 20)
-    private Date dateInscription;
+
+    @Column(nullable = false, unique = true, length = 30)
+    private String numPermis;
+
+    @Column(nullable = false)
+    private LocalDate dateInscription;
+
+    // 1 Client -> * Reservations
+    @OneToMany(mappedBy = "client")
+    private List<Reservation> reservations;
 }

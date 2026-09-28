@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Maintenance")
@@ -14,15 +14,23 @@ import java.util.Date;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Maintenance {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idMaintenance;
-    @Column(nullable = false, unique = true, length = 20)
-    private Date dateDebut;
-    @Column(nullable = false, unique = true, length = 20)
-    private Date dateFin;
-    @Column(nullable = false, unique = true, length = 20)
+
+    @Column(nullable = false)
+    private LocalDate dateDebut;
+
+    @Column(nullable = false)
+    private LocalDate dateFin;
+
+    @Column(nullable = false, length = 255)
     private String description;
+
+    // * Maintenances -> 1 Vehicule
+    @ManyToOne
+    @JoinColumn(name = "id_vehicule")
+    private Vehicule vehicule;
 }

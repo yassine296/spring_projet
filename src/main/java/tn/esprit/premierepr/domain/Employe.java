@@ -1,14 +1,10 @@
 package tn.esprit.premierepr.domain;
 
 import jakarta.persistence.*;
-
-import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
-
-import java.math.BigDecimal;
 
 @Entity
 @Table(name = "Employe")
@@ -16,16 +12,24 @@ import java.math.BigDecimal;
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-
 public class Employe {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idEmploye;
-    @Column(nullable = false, unique = true, length = 20)
+
+    @Column(nullable = false, length = 50)
     private String nom;
-    @Column(nullable = false, unique = true, length = 20)
-    private String ville;
+
+    @Column(nullable = false, length = 50)
+    private String prenom;
+
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private RoleEmploye role;
+
+    // * Employes -> 1 Agence
+    @ManyToOne
+    @JoinColumn(name = "id_agence")
+    private Agence agence;
 }

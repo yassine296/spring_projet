@@ -1,12 +1,12 @@
 package tn.esprit.premierepr.domain;
+
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
-import java.util.Date;
+import java.time.LocalDate;
 
 @Entity
 @Table(name = "Reservation")
@@ -15,21 +15,32 @@ import java.util.Date;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Reservation {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idReservation;
 
-    @Column(nullable = false, unique = true, length = 20)
-    private Date dateDebut;
+    @Column(nullable = false)
+    private LocalDate dateDebut;
 
-    @Column(nullable = false, length = 50)
-    private String marque;
-
-    @Column(nullable = false, length = 50)
-    private Date dateFin;
+    @Column(nullable = false)
+    private LocalDate dateFin;
 
     @Enumerated(EnumType.STRING)
     @Column(nullable = false, length = 20)
     private StatutReservation statut;
 
+    // * Reservations -> 1 Client
+    @ManyToOne
+    @JoinColumn(name = "id_client")
+    private Client client;
+
+    // * Reservations -> 1 Vehicule
+    @ManyToOne
+    @JoinColumn(name = "id_vehicule")
+    private Vehicule vehicule;
+
+    // 1 Reservation <-> 1 Contrat
+    @OneToOne(mappedBy = "reservation")
+    private Contrat contrat;
 }

@@ -6,7 +6,7 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.math.BigDecimal;
+import java.util.List;
 
 @Entity
 @Table(name = "Agence")
@@ -15,15 +15,28 @@ import java.math.BigDecimal;
 @NoArgsConstructor
 @AllArgsConstructor
 public class Agence {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long idAgence;
-    @Column(nullable = false, unique = true, length = 20)
+
+    @Column(nullable = false, length = 50)
     private String nom;
-    @Column(nullable = false, unique = true, length = 20)
+
+    @Column(nullable = false, length = 50)
     private String ville;
-    @Column(nullable = false, unique = true, length = 20)
+
+    @Column(nullable = false, length = 100)
     private String adresse;
-    @Column(nullable = false, unique = true, length = 20)
+
+    @Column(nullable = false, length = 20)
     private String telephone;
+
+    // 1 Agence -> * Vehicules
+    @OneToMany(mappedBy = "agence")
+    private List<Vehicule> vehicules;
+
+    // 1 Agence -> * Employes
+    @OneToMany(mappedBy = "agence")
+    private List<Employe> employes;
 }
