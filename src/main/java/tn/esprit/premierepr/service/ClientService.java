@@ -11,7 +11,7 @@ import java.util.List;
 @RequiredArgsConstructor
 public class ClientService implements IClientService {
 
-    private final ClientRepository clientRepository;
+     final ClientRepository clientRepository;
 
     @Override
     public List<Client> retrieveAllClients() {
